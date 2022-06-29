@@ -6,10 +6,11 @@ import { hashPassword } from 'src/utils/hashPassword';
 @Injectable()
 export class AuthService {
   constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
+  // TODO add login dto && logic
   login() {
     return 'login service';
   }
-
+  //  TODO add register dto
   async register(body) {
     const { username, password, email } = body;
     const existingUser = await this.userModel.find({ email });
