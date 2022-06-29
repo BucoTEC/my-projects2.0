@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { User, UserDocument } from 'src/schemas/user.schema';
+import { hashPassword } from 'src/utils/hashPassword';
 @Injectable()
 export class AuthService {
   constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
@@ -13,6 +14,12 @@ export class AuthService {
     const { username, password, email } = body;
     const existingUser = await this.userModel.find({ email });
     if (existingUser) 'user already exists';
-    return body;
+
+    const hashedPassword = await hashPassword(password);
+
+    return {
+      msg: 'your hashed password is',
+      hashPassword: hashedPassword,
+    };
   }
 }
