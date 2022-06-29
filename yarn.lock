@@ -4009,6 +4009,11 @@ prelude-ls@^1.2.1:
   resolved "https://registry.yarnpkg.com/prelude-ls/-/prelude-ls-1.2.1.tgz#debc6489d7a6e6b0e7611888cec880337d316396"
   integrity sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g==
 
+prettier-config-airbnb@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/prettier-config-airbnb/-/prettier-config-airbnb-1.0.0.tgz#82d0ff84b456337a8c12d8d6886e79392faadfcd"
+  integrity sha512-VR14BInIP+yP/xBv+w5UeNaz+esZywv0dLN/yS2DJtAu1s21v0uhcBVFznrfzp/Tqn4UOKH22/BNJ/5XI6DTmA==
+
 prettier-linter-helpers@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/prettier-linter-helpers/-/prettier-linter-helpers-1.0.0.tgz#d23d41fe1375646de2d0104d3454a3008802cf7b"
