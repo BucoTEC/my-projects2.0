@@ -6,7 +6,7 @@ import { hashPassword } from 'src/utils/hashPassword'
 @Injectable()
 export class AuthService {
     constructor(
-        @InjectModel(User.name) private userModel: Model<UserDocument>
+        @InjectModel(User.name) private userModel: Model<UserDocument>,
     ) {}
     // TODO add login dto && logic
     login() {
