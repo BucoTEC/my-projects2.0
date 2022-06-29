@@ -20,14 +20,10 @@ export class Project {
   })
   cat: string;
 
-  @Prop({
-    required: true,
-  })
+  @Prop()
   url: string;
 
-  @Prop({
-    required: true,
-  })
+  @Prop()
   img: string;
 }
 
