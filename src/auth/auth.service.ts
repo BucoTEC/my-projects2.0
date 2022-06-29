@@ -17,9 +17,19 @@ export class AuthService {
 
     const hashedPassword = await hashPassword(password);
 
+    const newUser = new this.userModel({
+      username,
+      email,
+      password: hashedPassword,
+    });
+
+    await newUser.save();
     return {
-      msg: 'your hashed password is',
-      hashPassword: hashedPassword,
+      msg: 'successfuly registerd',
+      userData: {
+        id: newUser.id,
+        email: newUser.email,
+      },
     };
   }
 }
