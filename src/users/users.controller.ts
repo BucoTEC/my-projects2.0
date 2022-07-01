@@ -1,4 +1,4 @@
-import { Controller, Get, Post } from '@nestjs/common';
+import { Controller, Delete, Get, Param, Patch } from '@nestjs/common';
 
 @Controller('users')
 export class UsersController {
@@ -7,18 +7,18 @@ export class UsersController {
     return 'all users';
   }
 
-  @Get()
-  singleUsers() {
-    return 'single user';
+  @Get(':id')
+  singleUser(@Param('id') id: string) {
+    return 'single user ' + id;
   }
 
-  @Post()
-  updateUsers() {
-    return 'update user';
+  @Patch(':id')
+  updateUser(@Param('id') id: string) {
+    return 'single user update ' + id;
   }
 
-  @Post()
-  deleteUsers() {
-    return 'delete user';
+  @Delete(':id')
+  deleteUser(@Param('id') id: string) {
+    return 'single user delete ' + id;
   }
 }
