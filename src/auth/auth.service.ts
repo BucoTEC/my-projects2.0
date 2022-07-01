@@ -2,10 +2,10 @@ import { Injectable } from '@nestjs/common';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { User, UserDocument } from 'src/schemas/user.schema';
-import { hashPassword } from 'src/utils/hashPassword';
-import { comparePassword } from 'src/utils/comparePassword';
+import { hashPassword } from 'src/utils/hashing/hashPassword';
+import { comparePassword } from 'src/utils/hashing/comparePassword';
 import { ConfigService } from '@nestjs/config';
-import { generateToken } from 'src/utils/generateToken';
+import { generateToken } from 'src/utils/jwt/generateToken';
 @Injectable()
 export class AuthService {
   constructor(
