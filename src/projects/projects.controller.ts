@@ -1,4 +1,4 @@
-import { Controller, Get, Request, UseGuards } from '@nestjs/common';
+import { Controller, Get, UseGuards } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { AuthGuard } from 'src/guards/auth.guard';
 @Controller('projects')
@@ -6,9 +6,7 @@ import { AuthGuard } from 'src/guards/auth.guard';
 export class ProjectsController {
   constructor(private configService: ConfigService) {}
   @Get()
-  projects(@Request() req) {
-    console.log(req.message);
-
+  projects() {
     const test = this.configService.get<string>('TEST');
     return { msg: 'hellp', test };
   }
