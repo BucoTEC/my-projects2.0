@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { User, UserDocument } from 'src/schemas/user.schema';
@@ -20,14 +20,13 @@ export class AuthService {
     const { email, password } = body;
     const user = await this.userModel.findOne({ email });
 
-    if (!user) {
-      return 'no user found';
-    }
+    if (!user)
+      throw new HttpException('Wrong credentials', HttpStatus.NOT_FOUND);
 
     const isAuth = await comparePassword(password, user.password);
-    if (!isAuth) {
-      return 'wrong credetnials';
-    }
+
+    if (!isAuth)
+      throw new HttpException('Wrong credentials', HttpStatus.UNAUTHORIZED);
 
     const token = generateToken(
       user.id,
@@ -44,7 +43,8 @@ export class AuthService {
   async register(body: RegisterDto) {
     const { username, password, email } = body;
     const existingUser = await this.userModel.find({ email });
-    if (existingUser) 'user already exists';
+    if (existingUser)
+      throw new HttpException('Email is taken', HttpStatus.CONFLICT);
 
     const hashedPassword = await hashPassword(password);
 
