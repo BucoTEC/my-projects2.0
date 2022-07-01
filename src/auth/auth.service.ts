@@ -7,12 +7,15 @@ import { comparePassword } from 'src/utils/hashing/comparePassword';
 import { ConfigService } from '@nestjs/config';
 import { generateToken } from 'src/utils/jwt/generateToken';
 import { LoginDto } from './dto/login.dto';
+import { RegisterDto } from './dto/register.dto';
 @Injectable()
 export class AuthService {
   constructor(
     @InjectModel(User.name) private userModel: Model<UserDocument>,
     private configService: ConfigService,
   ) {}
+
+  // LOGIN SERVICE
   async login(body: LoginDto) {
     const { email, password } = body;
     const user = await this.userModel.findOne({ email });
@@ -36,8 +39,9 @@ export class AuthService {
       token: token,
     };
   }
-  //  TODO add register dto
-  async register(body) {
+
+  // REGISTER SERVICE
+  async register(body: RegisterDto) {
     const { username, password, email } = body;
     const existingUser = await this.userModel.find({ email });
     if (existingUser) 'user already exists';
