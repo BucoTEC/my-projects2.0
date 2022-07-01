@@ -28,6 +28,8 @@
     "@nestjs/mongoose": "^9.1.1",
     "@nestjs/platform-express": "^8.0.0",
     "bcrypt": "^5.0.1",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.13.2",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.4.1",
     "pretty-quick": "^3.1.3",

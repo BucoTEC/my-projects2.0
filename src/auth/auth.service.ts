@@ -6,14 +6,14 @@ import { hashPassword } from 'src/utils/hashing/hashPassword';
 import { comparePassword } from 'src/utils/hashing/comparePassword';
 import { ConfigService } from '@nestjs/config';
 import { generateToken } from 'src/utils/jwt/generateToken';
+import { LoginDto } from './dto/login.dto';
 @Injectable()
 export class AuthService {
   constructor(
     @InjectModel(User.name) private userModel: Model<UserDocument>,
     private configService: ConfigService,
   ) {}
-  // TODO add login dto && logic
-  async login(body) {
+  async login(body: LoginDto) {
     const { email, password } = body;
     const user = await this.userModel.findOne({ email });
 
