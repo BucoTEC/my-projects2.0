@@ -4,9 +4,14 @@ import { InjectModel } from '@nestjs/mongoose';
 import { User, UserDocument } from 'src/schemas/user.schema';
 import { hashPassword } from 'src/utils/hashPassword';
 import { comparePassword } from 'src/utils/comparePassword';
+import { ConfigService } from '@nestjs/config';
+import { generateToken } from 'src/utils/generateToken';
 @Injectable()
 export class AuthService {
-  constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
+  constructor(
+    @InjectModel(User.name) private userModel: Model<UserDocument>,
+    private configService: ConfigService,
+  ) {}
   // TODO add login dto && logic
   async login(body) {
     const { email, password } = body;
@@ -20,7 +25,16 @@ export class AuthService {
     if (!isAuth) {
       return 'wrong credetnials';
     }
-    return { msg: 'your body', data: password };
+
+    const token = generateToken(
+      user.id,
+      this.configService.get('TOKEN_SECRET'),
+    );
+    return {
+      msg: 'succesfuly loged in ',
+      user: { email, id: user.id },
+      token: token,
+    };
   }
   //  TODO add register dto
   async register(body) {
