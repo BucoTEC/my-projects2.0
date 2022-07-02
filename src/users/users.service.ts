@@ -2,6 +2,8 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { User, UserDocument } from 'src/schemas/user.schema';
+import { hashPassword } from 'src/utils/hashing/hashPassword';
+import { UpdateUserDto } from './dto/updateUser.dto';
 
 @Injectable()
 export class UsersService {
@@ -25,7 +27,17 @@ export class UsersService {
     };
   }
 
-  updateUser(id: string) {
+  async updateUser(id: string, body: UpdateUserDto) {
+    if (body.password) {
+      const hashedPassword = await hashPassword(body.password);
+      await this.userModel.findByIdAndUpdate(id, {
+        ...body,
+        password: hashedPassword,
+      });
+      return 'single user update service ' + id;
+    }
+
+    await this.userModel.findByIdAndUpdate(id, body);
     return 'single user update service ' + id;
   }
 
