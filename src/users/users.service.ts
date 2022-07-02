@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { User, UserDocument } from 'src/schemas/user.schema';
@@ -13,8 +13,16 @@ export class UsersService {
     return { msg: 'all users', listAllUsers: allUsers };
   }
 
-  singleUser(id: string) {
-    return 'single user service ' + id;
+  async singleUser(id: string) {
+    const user = await this.userModel.findById(id);
+
+    if (!user) {
+      throw new HttpException('user not found', HttpStatus.NOT_FOUND);
+    }
+    return {
+      msg: 'single user',
+      user: user,
+    };
   }
 
   updateUser(id: string) {
