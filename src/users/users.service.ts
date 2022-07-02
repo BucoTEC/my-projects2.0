@@ -41,7 +41,8 @@ export class UsersService {
     return 'single user update service ' + id;
   }
 
-  deleteUser(id: string) {
-    return 'single user delete service ' + id;
+  async deleteUser(id: string) {
+    await this.userModel.findByIdAndDelete(id);
+    return 'user deleter';
   }
 }
