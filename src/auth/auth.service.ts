@@ -42,7 +42,8 @@ export class AuthService {
   // REGISTER SERVICE
   async register(body: RegisterDto) {
     const { username, password, email } = body;
-    const existingUser = await this.userModel.find({ email });
+    const existingUser = await this.userModel.findOne({ email });
+
     if (existingUser)
       throw new HttpException('Email is taken', HttpStatus.CONFLICT);
 
