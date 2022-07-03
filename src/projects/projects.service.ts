@@ -76,7 +76,16 @@ export class ProjectsService {
     }
 
     if (img) {
-      console.log(img);
+      await this.cloudinary.deleteImage(project.public_id);
+      const uploadRes = await this.cloudinary.uploadImage(img).catch(() => {
+        throw new BadRequestException('Invalid file type.');
+      });
+      await project.updateOne({
+        ...body,
+        url: uploadRes.secure_url,
+        public_id: uploadRes.public_id,
+      });
+      return 'project updated successfuly';
     }
     await project.updateOne(body);
     return 'project updated successfuly';
