@@ -43,7 +43,12 @@ export class ProjectsService {
   async updateProject(id: string, body: UpdateProjectDto, req: ReqWithUser) {
     const project = await this.projectModel.findById(id);
 
-    return project.owner;
+    if (req.user !== String(project.owner)) {
+      throw new HttpException('You are not the owner', HttpStatus.FORBIDDEN);
+    }
+
+    await project.update(body);
+    return 'project updated successfuly';
   }
 
   deleteProject(id: string) {
