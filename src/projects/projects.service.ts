@@ -1,11 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Project, ProjectDocument } from 'src/schemas/project.scheam';
 
 @Injectable()
 export class ProjectsService {
-  // TODO add CRUD functtionaliti on project model
   // TODO add ownership checker
   // TODO add multiple filtering options, optionali add cheach
   constructor(
@@ -21,7 +20,11 @@ export class ProjectsService {
     return { msg: 'all projects', allProjects: allProjects };
   }
 
-  oneProject(id: string) {
+  async oneProject(id: string) {
+    const singleProject = await this.projectModel.findById(id);
+
+    if (!singleProject)
+      throw new HttpException('No project with this id', HttpStatus.NOT_FOUND);
     return 'single project ' + id;
   }
 
