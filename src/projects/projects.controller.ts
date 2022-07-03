@@ -41,12 +41,14 @@ export class ProjectsController {
   }
 
   @Patch(':id')
+  @UseInterceptors(FileInterceptor('img'))
   updateProject(
+    @UploadedFile() img: Express.Multer.File,
     @Param('id') id: string,
     @Body() body: UpdateProjectDto,
     @Req() req: ReqWithUser,
   ) {
-    return this.projectsService.updateProject(id, body, req);
+    return this.projectsService.updateProject(id, body, req, img);
   }
 
   @Delete(':id')

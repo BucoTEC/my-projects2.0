@@ -63,14 +63,21 @@ export class ProjectsService {
     return { msg: 'singe project', data: singleProject };
   }
 
-  async updateProject(id: string, body: UpdateProjectDto, req: ReqWithUser) {
+  async updateProject(
+    id: string,
+    body: UpdateProjectDto,
+    req: ReqWithUser,
+    img: Express.Multer.File,
+  ) {
     const project = await this.projectModel.findById(id);
-
+    if (img) {
+      console.log(img);
+    }
     if (req.user !== String(project.owner)) {
       throw new HttpException('You are not the owner', HttpStatus.FORBIDDEN);
     }
 
-    await project.update(body);
+    await project.updateOne(body);
     return 'project updated successfuly';
   }
 
