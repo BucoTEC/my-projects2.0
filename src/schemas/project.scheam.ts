@@ -1,5 +1,7 @@
+import * as mongoose from 'mongoose';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
+import { User } from './user.schema';
 
 export type ProjectDocument = Project & Document;
 
@@ -13,7 +15,7 @@ export class Project {
   @Prop({
     required: true,
   })
-  desc: number;
+  desc: string;
 
   @Prop({
     required: true,
@@ -25,6 +27,9 @@ export class Project {
 
   @Prop()
   img: string;
+
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
+  owner: User;
 }
 
 export const ProjectSchema = SchemaFactory.createForClass(Project);
