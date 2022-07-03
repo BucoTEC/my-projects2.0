@@ -5,7 +5,9 @@ import { User } from './user.schema';
 
 export type ProjectDocument = Project & Document;
 
-@Schema()
+@Schema({
+  timestamps: true,
+})
 export class Project {
   @Prop({
     required: true,
