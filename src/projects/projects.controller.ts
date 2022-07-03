@@ -42,7 +42,7 @@ export class ProjectsController {
   }
 
   @Delete(':id')
-  deleteProject(@Param('id') id: string) {
-    return this.projectsService.deleteProject(id);
+  deleteProject(@Param('id') id: string, @Req() req: ReqWithUser) {
+    return this.projectsService.deleteProject(id, req);
   }
 }

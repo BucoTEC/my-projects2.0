@@ -51,7 +51,14 @@ export class ProjectsService {
     return 'project updated successfuly';
   }
 
-  deleteProject(id: string) {
-    return 'delete project ' + id;
+  async deleteProject(id: string, req: ReqWithUser) {
+    const project = await this.projectModel.findById(id);
+
+    if (req.user !== String(project.owner)) {
+      throw new HttpException('You are not the owner', HttpStatus.FORBIDDEN);
+    }
+
+    await project.delete();
+    return 'delete succesfuly deletes';
   }
 }
