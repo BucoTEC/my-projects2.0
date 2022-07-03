@@ -5,16 +5,19 @@ import {
   Param,
   Patch,
   Post,
-  // UseGuards,
+  Request,
+  UseGuards,
 } from '@nestjs/common';
-// import { AuthGuard } from 'src/guards/auth.guard';
+import { AuthGuard } from 'src/guards/auth.guard';
 import { ProjectsService } from './projects.service';
 @Controller('projects')
-// @UseGuards(AuthGuard)
+@UseGuards(AuthGuard)
 export class ProjectsController {
   constructor(private projectsService: ProjectsService) {}
   @Get()
-  allProjects() {
+  allProjects(@Request() req) {
+    console.log(`form controller ${req.user}`);
+
     return this.projectsService.allProjects();
   }
 
