@@ -85,10 +85,10 @@ export class ProjectsService {
         url: uploadRes.secure_url,
         public_id: uploadRes.public_id,
       });
-      return 'project updated successfuly';
+      return { msg: ' project succefuly updated', data: project };
     }
     await project.updateOne(body);
-    return 'project updated successfuly';
+    return { msg: ' project succefuly updated', data: project };
   }
 
   async deleteProject(id: string, req: ReqWithUser) {
