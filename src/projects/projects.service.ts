@@ -2,6 +2,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Project, ProjectDocument } from 'src/schemas/project.scheam';
+import { ReqWithUser } from 'src/types/reqWithUser';
 
 @Injectable()
 export class ProjectsService {
@@ -15,7 +16,14 @@ export class ProjectsService {
     return 'create project';
   }
 
-  async allProjects() {
+  async allProjects(req: ReqWithUser) {
+    const { query, user } = req;
+
+    if (query.currentUser) {
+      const curretnUser = await this.projectModel.find({ _id: user });
+      return { msg: 'curretn user', curretnUserProjects: curretnUser };
+    }
+
     const allProjects = await this.projectModel.find();
     return { msg: 'all projects', allProjects: allProjects };
   }

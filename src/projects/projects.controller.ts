@@ -17,9 +17,7 @@ export class ProjectsController {
   constructor(private projectsService: ProjectsService) {}
   @Get()
   allProjects(@Req() req: ReqWithUser) {
-    console.log(req.user);
-
-    return this.projectsService.allProjects();
+    return this.projectsService.allProjects(req);
   }
 
   @Post()
