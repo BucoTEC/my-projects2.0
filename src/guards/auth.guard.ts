@@ -5,10 +5,13 @@ import {
   HttpException,
   HttpStatus,
 } from '@nestjs/common';
-import { verify } from 'jsonwebtoken';
+import { JwtPayload, verify } from 'jsonwebtoken';
 import { Observable } from 'rxjs';
 import { ConfigService } from '@nestjs/config';
 
+interface UserIDJwtPayload extends JwtPayload {
+  id: string;
+}
 @Injectable()
 export class AuthGuard implements CanActivate {
   constructor(private configService: ConfigService) {}
@@ -23,9 +26,8 @@ export class AuthGuard implements CanActivate {
     if (!token) {
       throw new HttpException('Missing token', HttpStatus.BAD_REQUEST);
     }
-    const decodeToken = verify(token, secret);
-
-    req.user = decodeToken;
+    const { userId } = <UserIDJwtPayload>verify(token, secret);
+    req.user = userId;
     return true;
   }
 }
