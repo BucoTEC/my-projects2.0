@@ -12,7 +12,7 @@ export class ProjectsService {
     @InjectModel(Project.name) private projectModel: Model<ProjectDocument>,
   ) {}
 
-  createProject() {
+  createProject(body) {
     return 'create project';
   }
 

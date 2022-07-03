@@ -1,4 +1,5 @@
 import {
+  Body,
   Controller,
   Delete,
   Get,
@@ -21,8 +22,8 @@ export class ProjectsController {
   }
 
   @Post()
-  createProject() {
-    return 'create project';
+  createProject(@Body() body) {
+    return this.projectsService.createProject(body);
   }
   @Get(':id')
   oneProject(@Param('id') id: string) {
