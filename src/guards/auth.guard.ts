@@ -20,12 +20,11 @@ export class AuthGuard implements CanActivate {
   ): boolean | Promise<boolean> | Observable<boolean> {
     const req = context.switchToHttp().getRequest();
     const secret = this.configService.get('TOKEN_SECRET');
-
-    const token = req.headers?.authorization.split(' ')[1];
-
-    if (!token) {
+    if (!req.headers?.authorization) {
       throw new HttpException('Missing token', HttpStatus.BAD_REQUEST);
     }
+    const token = req.headers?.authorization.split(' ')[1];
+
     const { userId } = <UserIDJwtPayload>verify(token, secret);
     req.user = userId;
     return true;

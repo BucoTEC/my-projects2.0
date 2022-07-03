@@ -3,6 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Project, ProjectDocument } from 'src/schemas/project.scheam';
 import { ReqWithUser } from 'src/types/reqWithUser';
+import { CreateProjectDto } from './dto/createProject.dto';
 
 @Injectable()
 export class ProjectsService {
@@ -12,8 +13,8 @@ export class ProjectsService {
     @InjectModel(Project.name) private projectModel: Model<ProjectDocument>,
   ) {}
 
-  createProject(body) {
-    return 'create project';
+  createProject(body: CreateProjectDto) {
+    return { mgs: 'create project', data: body };
   }
 
   async allProjects(req: ReqWithUser) {

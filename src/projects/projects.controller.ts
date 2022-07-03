@@ -11,6 +11,7 @@ import {
 } from '@nestjs/common';
 import { AuthGuard } from 'src/guards/auth.guard';
 import { ReqWithUser } from 'src/types/reqWithUser';
+import { CreateProjectDto } from './dto/createProject.dto';
 import { ProjectsService } from './projects.service';
 @Controller('projects')
 @UseGuards(AuthGuard)
@@ -22,7 +23,7 @@ export class ProjectsController {
   }
 
   @Post()
-  createProject(@Body() body) {
+  createProject(@Body() body: CreateProjectDto) {
     return this.projectsService.createProject(body);
   }
   @Get(':id')
