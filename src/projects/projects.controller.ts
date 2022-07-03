@@ -9,13 +9,14 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { AuthGuard } from 'src/guards/auth.guard';
+import { ReqWithUser } from 'src/types/reqWithUser';
 import { ProjectsService } from './projects.service';
 @Controller('projects')
 @UseGuards(AuthGuard)
 export class ProjectsController {
   constructor(private projectsService: ProjectsService) {}
   @Get()
-  allProjects(@Req() req) {
+  allProjects(@Req() req: ReqWithUser) {
     console.log(req.user);
 
     return this.projectsService.allProjects();
