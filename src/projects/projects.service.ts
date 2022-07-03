@@ -13,8 +13,10 @@ export class ProjectsService {
     @InjectModel(Project.name) private projectModel: Model<ProjectDocument>,
   ) {}
 
-  createProject(body: CreateProjectDto) {
-    return { mgs: 'create project', data: body };
+  async createProject(body: CreateProjectDto, req: ReqWithUser) {
+    const newProject = new this.projectModel({ ...body, owner: req.user });
+    await newProject.save();
+    return { mgs: 'create project', data: newProject };
   }
 
   async allProjects(req: ReqWithUser) {

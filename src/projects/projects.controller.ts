@@ -23,8 +23,8 @@ export class ProjectsController {
   }
 
   @Post()
-  createProject(@Body() body: CreateProjectDto) {
-    return this.projectsService.createProject(body);
+  createProject(@Body() body: CreateProjectDto, @Req() req: ReqWithUser) {
+    return this.projectsService.createProject(body, req);
   }
   @Get(':id')
   oneProject(@Param('id') id: string) {
