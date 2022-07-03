@@ -23,7 +23,11 @@ export class UsersService {
     }
     return {
       msg: 'single user',
-      user: user,
+      user: {
+        id: user.id,
+        username: user.username,
+        email: user.email,
+      },
     };
   }
 
