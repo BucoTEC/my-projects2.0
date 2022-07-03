@@ -1,13 +1,39 @@
-import { Controller, Get, UseGuards } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
-import { AuthGuard } from 'src/guards/auth.guard';
+import {
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+  // UseGuards,
+} from '@nestjs/common';
+// import { AuthGuard } from 'src/guards/auth.guard';
+import { ProjectsService } from './projects.service';
 @Controller('projects')
-@UseGuards(AuthGuard)
+// @UseGuards(AuthGuard)
 export class ProjectsController {
-  constructor(private configService: ConfigService) {}
+  constructor(private projectsService: ProjectsService) {}
   @Get()
-  projects() {
-    const test = this.configService.get<string>('TEST');
-    return { msg: 'hellp', test };
+  allProjects() {
+    return this.projectsService.allProjects();
+  }
+
+  @Post()
+  createProject() {
+    return 'create project';
+  }
+  @Get(':id')
+  oneProject(@Param('id') id: string) {
+    return this.projectsService.oneProject(id);
+  }
+
+  @Patch(':id')
+  updateProject(@Param('id') id: string) {
+    return this.projectsService.updateProject(id);
+  }
+
+  @Delete(':id')
+  deleteProject(@Param('id') id: string) {
+    return this.projectsService.deleteProject(id);
   }
 }
