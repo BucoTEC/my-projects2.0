@@ -29,7 +29,14 @@ export class ProjectsService {
         throw new BadRequestException('Invalid file type.');
       });
 
-      console.log(uploadRes);
+      const newProject = new this.projectModel({
+        ...body,
+        owner: req.user,
+        url: uploadRes.secure_url,
+        public_id: uploadRes.public_id,
+      });
+      await newProject.save();
+      return { mgs: 'create project', data: newProject };
     }
     const newProject = new this.projectModel({ ...body, owner: req.user });
     await newProject.save();
