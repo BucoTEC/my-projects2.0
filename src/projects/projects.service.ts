@@ -35,7 +35,7 @@ export class ProjectsService {
 
     if (!singleProject)
       throw new HttpException('No project with this id', HttpStatus.NOT_FOUND);
-    return 'single project ' + id;
+    return { msg: 'singe project', data: singleProject };
   }
 
   async updateProject(id: string, body: UpdateProjectDto, req: ReqWithUser) {
