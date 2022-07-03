@@ -4,6 +4,7 @@ import { Model } from 'mongoose';
 import { Project, ProjectDocument } from 'src/schemas/project.scheam';
 import { ReqWithUser } from 'src/types/reqWithUser';
 import { CreateProjectDto } from './dto/createProject.dto';
+import { UpdateProjectDto } from './dto/uptadeProject.dto';
 
 @Injectable()
 export class ProjectsService {
@@ -39,8 +40,10 @@ export class ProjectsService {
     return 'single project ' + id;
   }
 
-  updateProject(id: string) {
-    return 'update project ' + id;
+  async updateProject(id: string, body: UpdateProjectDto, req: ReqWithUser) {
+    const project = await this.projectModel.findById(id);
+
+    return project.owner;
   }
 
   deleteProject(id: string) {

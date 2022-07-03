@@ -1,18 +1,18 @@
-import { IsNotEmpty, IsOptional, IsString, Length } from 'class-validator';
+import { IsOptional, IsString, Length } from 'class-validator';
 
-export class CreateProjectDto {
+export class UpdateProjectDto {
   @IsString()
-  @IsNotEmpty()
+  @IsOptional()
   @Length(3, 30)
   title: string;
 
   @IsString()
-  @IsNotEmpty()
+  @IsOptional()
   @Length(5)
   desc: string;
 
   @IsString()
-  @IsNotEmpty()
+  @IsOptional()
   cat: string;
 
   @IsString()

@@ -12,6 +12,7 @@ import {
 import { AuthGuard } from 'src/guards/auth.guard';
 import { ReqWithUser } from 'src/types/reqWithUser';
 import { CreateProjectDto } from './dto/createProject.dto';
+import { UpdateProjectDto } from './dto/uptadeProject.dto';
 import { ProjectsService } from './projects.service';
 @Controller('projects')
 @UseGuards(AuthGuard)
@@ -32,8 +33,12 @@ export class ProjectsController {
   }
 
   @Patch(':id')
-  updateProject(@Param('id') id: string) {
-    return this.projectsService.updateProject(id);
+  updateProject(
+    @Param('id') id: string,
+    @Body() body: UpdateProjectDto,
+    @Req() req: ReqWithUser,
+  ) {
+    return this.projectsService.updateProject(id, body, req);
   }
 
   @Delete(':id')
