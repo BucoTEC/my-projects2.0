@@ -28,6 +28,9 @@ export class Project {
   url: string;
 
   @Prop()
+  public_id: string;
+
+  @Prop()
   img: string;
 
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })

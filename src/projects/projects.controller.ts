@@ -7,8 +7,11 @@ import {
   Patch,
   Post,
   Req,
+  UploadedFile,
+  UseInterceptors,
   UseGuards,
 } from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
 import { AuthGuard } from 'src/guards/auth.guard';
 import { ReqWithUser } from 'src/types/reqWithUser';
 import { CreateProjectDto } from './dto/createProject.dto';
@@ -24,8 +27,13 @@ export class ProjectsController {
   }
 
   @Post()
-  createProject(@Body() body: CreateProjectDto, @Req() req: ReqWithUser) {
-    return this.projectsService.createProject(body, req);
+  @UseInterceptors(FileInterceptor('img'))
+  createProject(
+    @UploadedFile() img: Express.Multer.File,
+    @Body() body: CreateProjectDto,
+    @Req() req: ReqWithUser,
+  ) {
+    return this.projectsService.createProject(body, req, img);
   }
   @Get(':id')
   oneProject(@Param('id') id: string) {

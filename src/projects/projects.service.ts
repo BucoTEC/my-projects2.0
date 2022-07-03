@@ -1,6 +1,12 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import {
+  HttpException,
+  HttpStatus,
+  Injectable,
+  BadRequestException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import { CloudinaryService } from 'src/cloudinary/cloudinary.service';
 import { Project, ProjectDocument } from 'src/schemas/project.scheam';
 import { ReqWithUser } from 'src/types/reqWithUser';
 import { CreateProjectDto } from './dto/createProject.dto';
@@ -10,9 +16,21 @@ import { UpdateProjectDto } from './dto/uptadeProject.dto';
 export class ProjectsService {
   constructor(
     @InjectModel(Project.name) private projectModel: Model<ProjectDocument>,
+    private cloudinary: CloudinaryService,
   ) {}
 
-  async createProject(body: CreateProjectDto, req: ReqWithUser) {
+  async createProject(
+    body: CreateProjectDto,
+    req: ReqWithUser,
+    img: Express.Multer.File,
+  ) {
+    if (img) {
+      const uploadRes = await this.cloudinary.uploadImage(img).catch(() => {
+        throw new BadRequestException('Invalid file type.');
+      });
+
+      console.log(uploadRes);
+    }
     const newProject = new this.projectModel({ ...body, owner: req.user });
     await newProject.save();
     return { mgs: 'create project', data: newProject };
