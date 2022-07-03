@@ -8,8 +8,6 @@ import { UpdateProjectDto } from './dto/uptadeProject.dto';
 
 @Injectable()
 export class ProjectsService {
-  // TODO add ownership checker
-  // TODO add multiple filtering options, optionali add cheach
   constructor(
     @InjectModel(Project.name) private projectModel: Model<ProjectDocument>,
   ) {}
