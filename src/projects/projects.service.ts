@@ -70,13 +70,14 @@ export class ProjectsService {
     img: Express.Multer.File,
   ) {
     const project = await this.projectModel.findById(id);
-    if (img) {
-      console.log(img);
-    }
+
     if (req.user !== String(project.owner)) {
       throw new HttpException('You are not the owner', HttpStatus.FORBIDDEN);
     }
 
+    if (img) {
+      console.log(img);
+    }
     await project.updateOne(body);
     return 'project updated successfuly';
   }
@@ -87,6 +88,8 @@ export class ProjectsService {
     if (req.user !== String(project.owner)) {
       throw new HttpException('You are not the owner', HttpStatus.FORBIDDEN);
     }
+
+    await this.cloudinary.deleteImage(project.public_id);
 
     await project.delete();
     return 'delete succesfuly deletes';

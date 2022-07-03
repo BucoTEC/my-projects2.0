@@ -20,4 +20,10 @@ export class CloudinaryService {
       toStream(file.buffer).pipe(upload);
     });
   }
+  async deleteImage(id: string) {
+    v2.uploader.destroy(id, (error, result) => {
+      if (error) return error;
+      return result;
+    });
+  }
 }
